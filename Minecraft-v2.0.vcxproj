@@ -147,18 +147,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entity\Camera\Camera.cpp" />
     <ClCompile Include="src\Graphics\Buffers\EBO.cpp" />
     <ClCompile Include="src\Graphics\Buffers\VAO.cpp" />
     <ClCompile Include="src\Graphics\Buffers\VBO.cpp" />
     <ClCompile Include="src\Graphics\glad.c" />
     <ClCompile Include="src\Graphics\Shaders\Shader.cpp" />
+    <ClCompile Include="src\Graphics\Textures\stb.cpp" />
+    <ClCompile Include="src\Graphics\Textures\Texture.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\include\stb\stb_image.h" />
+    <ClInclude Include="src\Graphics\Models.h" />
+    <ClInclude Include="src\main.h" />
     <ClInclude Include="src\Graphics\Buffers\EBO.h" />
     <ClInclude Include="src\Graphics\Buffers\VAO.h" />
     <ClInclude Include="src\Graphics\Buffers\VBO.h" />
+    <ClInclude Include="src\Entity\Camera\Camera.h" />
     <ClInclude Include="src\Graphics\Shaders\Shader.h" />
+    <ClInclude Include="src\Graphics\Textures\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Graphics\Shaders\frag.gls" />
