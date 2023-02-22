@@ -6,7 +6,6 @@ in vec2 texCoord;
 
 uniform sampler2D tex0;
 
-
 void main()
 {
 	vec4 r = texture(tex0, texCoord);

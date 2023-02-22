@@ -19,7 +19,7 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 	glGenerateMipmap(texType);
 
 	stbi_image_free(bytes);
-
+	size = widthImg;
 	glBindTexture(texType, 0);
 }
 
