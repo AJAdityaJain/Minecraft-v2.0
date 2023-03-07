@@ -34,9 +34,7 @@ void LoadModel(std::string json) {
         const Value& name = doc["Name"]; assert(name.IsString());
         face.Name = name.GetString();
 
-        if (face.Index.size() >= 3) {
-            modelDict.push_back(face);
-        }
+        modelDict.push_back(face);
     }
 }
 

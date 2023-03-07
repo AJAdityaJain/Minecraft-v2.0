@@ -1,5 +1,7 @@
 #include"EBO.h"
 
+//EBO::EBO() { ID = 0; }
+
 EBO::EBO(std::vector<GLuint> indices)
 {
 	glGenBuffers(1, &ID);

@@ -7,6 +7,8 @@ class VBO
 {
 public:
 	GLuint ID;
+
+	//VBO();
 	VBO(std::vector<GLfloat> vertices);
 
 	void Bind();

@@ -126,7 +126,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Shell32.lib;Gdi32.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,13 +143,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Shell32.lib;Gdi32.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="lib\include\glm\detail\glm.cpp" />
     <ClCompile Include="src\Blocks\Block\Block.cpp" />
     <ClCompile Include="src\Blocks\Chunk\Chunk.cpp" />
+    <ClCompile Include="src\Blocks\World\World.cpp" />
     <ClCompile Include="src\Entity\Camera\Camera.cpp" />
     <ClCompile Include="src\Graphics\Buffers\EBO.cpp" />
     <ClCompile Include="src\Graphics\Buffers\VAO.cpp" />
@@ -415,6 +416,7 @@
     <ClInclude Include="lib\include\stb\stb_image.h" />
     <ClInclude Include="src\Blocks\Block\Block.h" />
     <ClInclude Include="src\Blocks\Chunk\Chunk.h" />
+    <ClInclude Include="src\Blocks\World\World.h" />
     <ClInclude Include="src\Graphics\Mesh\Mesh.h" />
     <ClInclude Include="src\Graphics\Models\Models.h" />
     <ClInclude Include="src\main.h" />

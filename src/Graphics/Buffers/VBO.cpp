@@ -1,5 +1,7 @@
 #include"VBO.h"
 
+//VBO::VBO() { ID = 0; }
+
 VBO::VBO(std::vector<GLfloat> vertices){
 	glGenBuffers(1, &ID);
 	Bind();

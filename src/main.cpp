@@ -5,57 +5,68 @@
 #include "Graphics/Textures/Texture.h"
 #include "Entity/Camera/Camera.h"
 #include "Graphics/Mesh/Mesh.h"
-#include "Blocks/Chunk/Chunk.h"
+#include "Blocks/World/World.h"
 
-int getTexSize() {
-    return texSize;
-}
+World world = World();
+
+
 int main()
 {
     GLFWwindow* window; if (createWindow(window) != 0) { return -1; }
-    VAO va; 
-
+    VAO va;
 
     va.Bind();
-        Shader shader = Shader((ShaderDir + "vert.gls").c_str(), (ShaderDir + "frag.gls").c_str()); shader.Bind();
-        Texture tex = Texture((ResDir + "Textures\\Textures.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-        texSize = tex.size;
-        tex.texUnit(shader, "tex0", 0); tex.Bind();    
+    Shader shader = Shader((ShaderDir + "vert.gls").c_str(), (ShaderDir + "frag.gls").c_str()); shader.Bind();
+    Texture tex = Texture((ResDir + "Textures\\Textures.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+    texSize = tex.size;
+    tex.texUnit(shader, "tex0", 0); tex.Bind();
     va.Unbind();
 
-    std::cout << texSize << "px\n";
     LoadModels();
-    std::cout << texSize << "px\n";
     LoadBlocks();
 
+    world.Generate();
+
     Mesh mesh;
-    mesh.AddModel(0);
+    mesh.AddWorld(&world);
 
     va.Bind();
-        VBO vb(mesh.vertex); vb.Bind();
-        EBO eb(mesh.index); eb.Bind();
+    VBO vb(mesh.vertex); vb.Bind();
+    EBO eb(mesh.index); eb.Bind();
 
-        va.LinkAttrib(vb, 0, 3, GL_FLOAT, 5 * sizeof(GLfloat), (void*)0);
-        va.LinkAttrib(vb, 1, 2, GL_FLOAT, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+    va.LinkAttrib(vb, 0, 3, GL_FLOAT, 5 * sizeof(GLfloat), (void*)0);
+    va.LinkAttrib(vb, 1, 2, GL_FLOAT, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
     va.Unbind();
-    vb.Unbind();eb.Unbind();
+    vb.Unbind(); eb.Unbind();
     va.Bind();
 
-    
-    Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
-    
 
-    while (!glfwWindowShouldClose(window))
-    {
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    Camera camera(width, height, glm::vec3(2.0f, 4.0f, 2.0f));
+
+    int fps = 0;
+    double lastTime = glfwGetTime();
+    double currentTime = glfwGetTime();
+
+    while (!glfwWindowShouldClose(window)){
+        
+        fps++;
+        currentTime = glfwGetTime();
+        if (currentTime - lastTime >= 1.0) {
+            //system("cls");
+            //std::cout << fps;
+            fps = 0;
+            lastTime += 1.0;
+        }
+
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         camera.Inputs(window);
-        camera.Matrix(45.0f, 0.1f, 100.0f, shader, "camMatrix");
+        camera.Matrix(87.0f, 0.00001f, 100.0f, shader, "camMatrix");
         glDrawElements(GL_TRIANGLES, mesh.index.size(), GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
         glfwPollEvents();
-
-    }
+    } 
     va.Delete();
     vb.Delete();
     eb.Delete();
@@ -64,9 +75,18 @@ int main()
 
     glfwDestroyWindow(window);
     glfwTerminate();
-    
+
 
     return 0;
+}
+
+
+int getTexSize() {
+    return texSize;
+}
+
+int GetBlockAbs(int x, int y, int z) {
+    return world.Get(x,y,z);
 }
 
 std::string readFile(const char* filename) {
@@ -94,7 +114,7 @@ int createWindow(GLFWwindow*& window){
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(width, height, "urmo", NULL, NULL);
+    window = glfwCreateWindow(width, height, "Minecraft Spinoff", NULL, NULL);
     if (!window)
     {
         std::cout << "Welp... Window not working, glfwWindow not created" << std::endl;
@@ -104,10 +124,16 @@ int createWindow(GLFWwindow*& window){
 
     glfwMakeContextCurrent(window);
     gladLoadGL();
+    GLFWimage images[1]{};
+    int d = 4;
+    images[0].pixels = stbi_load((ResDir +  "Icon.png").c_str(), &images[0].width, &images[0].height, &d, d); //rgba channels 
+    glfwSetWindowIcon(window, 1, images);
+    stbi_image_free(images[0].pixels);
+
     glViewport(0, 0, width, height);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
-    glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+    glClearColor(0.6f, 0.63f, 1.0f, 1.0f);
     return 0;
 }

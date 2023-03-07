@@ -13,6 +13,7 @@
 
 std::string readFile(const char* filename);
 int getTexSize();
+int GetBlockAbs(int x, int y, int z);
 
 static int texSize;
 
@@ -31,6 +32,8 @@ static const glm::vec3 X = glm::vec3(1.0f, 0.0f, 0.0f);
 static const glm::vec3 Y = glm::vec3(0.0f, 1.0f, 0.0f);
 static const glm::vec3 Z = glm::vec3(0.0f, 0.0f, 1.0f);
 
-//static const glm::vec3 Vec30 = glm::vec3(0, 0, 0);
+static const glm::mat4 Mat4ID = glm::mat4(1.0f);
+static const glm::vec3 Vec30 = glm::vec3(0);
+static const glm::vec3 Vec30_5 = glm::vec3(0.5f);
 
 int createWindow(GLFWwindow*& window);
